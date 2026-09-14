@@ -25,14 +25,18 @@ fi
 
 # --- Remove old configs ---
 echo "Removing old configs"
-rm -rf ~/.config/nvim ~/.local/share/nvim/ ~/.local/state/nvim ~/.cache/nvim/ ~/.config/hypr/hyprlock.conf
+rm -rf ~/.config/nvim ~/.local/share/nvim/ ~/.local/state/nvim ~/.cache/nvim/ ~/.config/hypr/hyprlock.conf ~/.config/doom
 
 # --- Stow dotfiles ---
 cd "$REPO_NAME"
 
-for dir in zshrc tmux nvim hyprlock hyprmocha; do
+for dir in zshrc nvim hyprlock hyprmocha doom; do
   echo "Stowing $dir..."
   stow "$dir"
 done
+
+# --- Sync Doom ---
+echo "Syncing Doom..."
+~/.config/emacs/bin/doom sync
 
 cd "$ORIGINAL_DIR"
