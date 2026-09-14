@@ -11,6 +11,10 @@
 -- Use single default monitor (see all monitors with: hyprctl monitors)
 -- hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 
+-- Keep this laptop at its personal 1x scale after Omarchy's monitor defaults.
+hl.env("GDK_SCALE", "1")
+hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
+
 -- trigger when the switch is turning on
 -- hl.bind("switch:on:Lid Switch", function() hl.dispatch(hl.dsp.monitor_set({ output = "eDP-1", disabled = true })) end)
 -- trigger when the switch is turning off

@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
-HYPRLAND_CONFIG="$HOME/.config/hypr/hyprland.conf"
+HYPRLAND_CONFIG="$HOME/.config/hypr/hyprland.lua"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-OVERRIDES_CONFIG="$SCRIPT_DIR/hyprland.local.conf"
-SOURCE_LINE="source = $OVERRIDES_CONFIG"
+OVERRIDES_CONFIG="$HOME/.config/hypr/hyprland-override.lua"
+REPO_OVERRIDES_CONFIG="$SCRIPT_DIR/hyprland-override.lua"
+SOURCE_LINE='require("hypr.hyprland-override")'
 
 # --- Check if hyprland config exists ---
 if [ ! -f "$HYPRLAND_CONFIG" ]; then
@@ -13,13 +14,12 @@ if [ ! -f "$HYPRLAND_CONFIG" ]; then
     exit 1
 fi
 
-# --- Check if overrides config exists ---
+# --- Seed the personal override file once, without overwriting it later ---
 if [ ! -f "$OVERRIDES_CONFIG" ]; then
-    echo "Overrides config not found at $OVERRIDES_CONFIG"
-    exit 1
+    cp "$REPO_OVERRIDES_CONFIG" "$OVERRIDES_CONFIG"
 fi
 
-# --- Check if source line already exists in hyprland.conf ---
+# --- Check if Lua override loader already exists ---
 if grep -Fxq "$SOURCE_LINE" "$HYPRLAND_CONFIG"; then
     echo "Source line already exists in $HYPRLAND_CONFIG"
 else
