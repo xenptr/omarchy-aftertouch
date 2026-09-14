@@ -21,3 +21,6 @@ ensure_line "$tmux_config" "$tmux_loader"
 # when no Tmux server is running.
 tmux has-session 2>/dev/null && tmux source-file "$tmux_config" || true
 
+# Omarchy updates can change the Bash feature files our Zsh layer consumes.
+# This only reports compatibility; it never changes Omarchy-managed files.
+"$HOME/omarchy-aftertouch/zsh/audit-current-omarchy-bash.sh" || true
